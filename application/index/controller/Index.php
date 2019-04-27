@@ -1,11 +1,24 @@
 <?php
 namespace app\index\controller;
 
+use app\model\UserModel;
+
 class Index
 {
     public function index()
     {
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$user=new UserModel();
+		$user->ip=$ip;
+		$user->created_at=date("Y-m-d H:i:s");
+		$user->updated_at=date("Y-m-d H:i:s");
+		$user->save();
         return view();
+    }
+
+    public function user(){
+    	$users=UserModel::select();
+    	return view("",compact('users'));
     }
 
     public function del(){
